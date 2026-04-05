@@ -1,11 +1,21 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
-// 👉 ADD THIS LINE
+// Enable CORS for API calls
 app.use(cors());
 
+// Serve static files (images, CSS, JS) from the repo root directory
+app.use(express.static(path.join(__dirname, "..")));
+
+// Serve the ecommerce HTML file at the root route
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "E-Commerce Store.html"));
+});
+
+// API endpoint
 app.get("/api/products", (req, res) => {
   res.json([
     { id: 1, name: "Phone", price: 10000 },
