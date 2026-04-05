@@ -1,11 +1,20 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
-// 👉 ADD THIS LINE
 app.use(cors());
 
+// Serve static files from root directory
+app.use(express.static(path.join(__dirname, "..")));
+
+// Serve the ecommerce HTML at root
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "E-Commerce Store.html"));
+});
+
+// Keep existing API endpoint
 app.get("/api/products", (req, res) => {
   res.json([
     { id: 1, name: "Phone", price: 10000 },
